@@ -1,6 +1,15 @@
 {
     "name": "galafeno/lingo",
-    "description": "abstracao sobre um servico rest",
+    "description": "A neat REST abstraction",
+    "keywords": [
+        "php", 
+        "laravel",
+        "rest",
+        "http",
+        "json",
+        "sqs", 
+        "aws"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [

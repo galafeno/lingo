@@ -1,6 +1,6 @@
 # Lingo
 
-Lingo is a package for Laravel that provides a layer of abstraction about the complexity of integrating with any rest service. so it is possible to encapsulate http communication concepts in a much closer object-oriented design and thus improve developer experience.
+Lingo is a package for Laravel that provides a layer of abstraction to any REST service. so it is possible to encapsulate http communication concepts in a much closer object-oriented design and thus improve developer experience.
 
 ## Installation
 
@@ -133,7 +133,7 @@ You can also define extra body parameters in runtime like so:
 
 #### Handling Authentication
 
-In real world applications rest services implements some type of authentication scheme. If you are dealing with a simple aproach like a signature or key into request headers you should simply use the `withHeaders` command to attach your auth configuration into Lingo. But some services utilizes especifics schemes. To handle it you should define an `auth` configuration within your lingo class. currently, this package suporte `apiKeys` and `oauth2` auth methods.
+In real world applications REST services implements some type of authentication scheme. If you are dealing with a simple aproach like a signature or key into request headers you should simply use the `withHeaders` command to attach your auth configuration into Lingo. But some services utilizes especifics schemes. To handle it you should define an `auth` configuration within your lingo class. currently, this package suporte `apiKeys` and `oauth2` auth methods.
 
 ##### apiKeys
 
