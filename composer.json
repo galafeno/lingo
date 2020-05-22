@@ -1,0 +1,32 @@
+{
+    "name": "galafeno/lingo",
+    "description": "abstracao sobre um servico rest",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raphael",
+            "email": "raphael9broetto@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "dusterio/laravel-plain-sqs": "^0.1.17",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Galafeno\\Lingo\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Galafeno\\Lingo\\LingoServiceProvider"
+            ],
+            "aliases": {
+                "Lingo": "Galafeno\\Lingo\\Facades\\Lingo"
+            }
+        }
+    }
+}

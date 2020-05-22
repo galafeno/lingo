@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Lingos;
+
+use Galafeno\Lingo\BaseLingo;
+
+class {{NAME}}Lingo extends BaseLingo {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sync Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuração do microserviço para comunicação sincrona, feita via Rest
+    | Adicione a url base para o seu serviço e os comandos apropriados
+    |
+    */
+    protected $sync = [
+        'base_url' => '{{BASE_URL}}',
+        'commands' => [
+            'exampleCommand' => [
+                'verb' => 'get',
+                'url' => "/"
+            ],
+        ]
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Async Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configuração do microserviço para comunicação assincrona, feita via 
+    | sqs queue. adicione a fila do serviço e os comandos apropriados
+    |
+    */
+    protected $async = [
+        'queue' => 'default',
+        'commands' => [
+            'exampleCommand' => [
+                'action' => 'ExampleAction'
+            ]
+        ]
+    ];
+}
