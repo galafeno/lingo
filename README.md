@@ -58,10 +58,10 @@ That will produce the follow headers in every request:
 
 ```json
 {
-    Content-Type: application/json
-    Accept: application/json
-    DomainId: 15
-    SafeMode: Unguarded
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "DomainId": "15",
+    "SafeMode": "Unguarded"
 }
 ```
 
@@ -117,8 +117,8 @@ That will insert the follow body parameters in every request:
 ```json
     POST https://awesome.api/v1/movies
     {
-        username: "superuser",
-        email: "superuser@super.user"
+        "username": "superuser",
+        "email": "superuser@super.user"
     }
 ```
 
