@@ -146,7 +146,7 @@ That method will attach the key configuration as a query parameter.
             'apiKeys' => [
                 'my-key' => 'my-secret'
             ]
-        ]
+        ],
         'commands' => [
             ...
         ]
@@ -163,14 +163,15 @@ That method will handle the oauth2 flow to retrieve the jwt and cache it using y
 
 ```php
     protected $sync = [
-        'base_url' => 'https://protected.rest/v1',
+        'base_url' => 'https://protected.rest',
         'auth' => [
             'oauth2' => [
+                'url' => '/oauth/token',
                 'grant_type' => 'client_credentials',
                 'client_id' => 'my-client-id',
                 'client_secret' => 'my-client-secret'
             ]
-        ]
+        ],
         'commands' => [
             ...
         ]
