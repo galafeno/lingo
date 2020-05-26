@@ -16,6 +16,7 @@ class BaseLingo
     protected $headers = [];
     protected $bindings = [];
     protected $mode = 'sync';
+    protected $mockup = null;
     private $gclient;
 
 
@@ -26,6 +27,7 @@ class BaseLingo
             'Content-Type' => 'application/json',
             'Accept' => 'application/json'
         ]);
+        $this->mockup = app('env') == 'testing';
     }
 
     public function command($command, ...$bindings)
@@ -54,6 +56,12 @@ class BaseLingo
         return $this;
     }
 
+    public function withMockup($mockup)
+    {
+        $this->mockup = $mockup;
+        return $this;
+    }
+
     public function sync()
     {
         $this->mode = 'sync';
@@ -76,13 +84,19 @@ class BaseLingo
             throw new \Exception("Commando não encontrado");
         }
 
+        $commandConfig = $this->{$this->mode}['commands'][$this->command];
+        if (isset($commandConfig['function'])) {
+            $callable = $commandConfig['function'];
+            return $this->$callable($this->bindings);
+        }
+
         if (isset($this->{$this->mode}['auth'])) {
             foreach ($this->{$this->mode}['auth'] as $auth_mode => $auth_config) {
                 $this->$auth_mode($auth_config);
             }
         }
 
-        $commandConfig = $this->{$this->mode}['commands'][$this->command];
+        
         return $this->{'send' . $this->mode}($commandConfig);
     }
 
@@ -91,25 +105,32 @@ class BaseLingo
         $verb = $commandConfig['verb'];
         $base_url = $this->sync['base_url'];
         $url = $commandConfig['url'];
+        $mockupData = $commandConfig['mockup'] ?? 'static';
 
         foreach ($this->bindings as $binding) {
             $url = preg_replace('/{:\?}/', $binding, $url, 1);
         }
 
-        if (app('env') != 'testing') {
+        if (!$this->mockup) {
             return json_decode(
                 $this
-                    ->gclient
-                    ->request($verb, "{$base_url}{$url}", [
-                        'headers' => $this->headers,
-                        'query' => $this->params,
-                        'json' => $this->data
-                    ])
-                    ->getBody()
-                    ->getContents()
+                ->gclient
+                ->request($verb, "{$base_url}{$url}", [
+                    'headers' => $this->headers,
+                    'query' => $this->params,
+                    'json' => $this->data
+                ])
+                ->getBody()
+                ->getContents()
             );
         } else {
-            return (object) $commandConfig['shouldReturn'];
+            if ($mockupData == 'static') {
+                return (object) $commandConfig['shouldReturn'];
+            } elseif ($mockupData == 'function') {
+                return $this->{$commandConfig['shouldReturn']}($this->bindings);
+            } else {
+                throw new \Exception("Tipo de mockup não suportado");
+            }
         }
     }
 
